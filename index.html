@@ -34,73 +34,72 @@
 <script src="https://unpkg.com/react/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom/umd/react-dom.development.js"></script>
 <script id="INLINE_PEN_JS_ID">
-const OPTIONS = ["Result 1", "Result 2", "Result 3"];
+function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}const OPTIONS = ["Result 1", "Result 2", "Result 3"];
 
 class Autocomplete extends React.Component {
-  
-	constructor() {
-  	super();
-    this.editorRef_ = null;
-	  this.optionRefs_ = OPTIONS.map(option => null);
-    this.state = {editorRange: null, searching: false, activeOptionIndex: -1, announcement: null};
-  }
 
-  render() {
-  	const {searching, activeOptionIndex, announcement} = this.state;
-    return (<div>
-      <div ref={e => this.editorRef_ = e} 
-           id="editor"
-           contentEditable="true" role="textbox" 
-           aria-multiline="true" 
-           aria-activedescendant={searching && `result-${activeOptionIndex}`} 
-           aria-controls={searching ? "listbox" : undefined}
-           aria-expanded={searching || undefined} 
-           aria-haspopup={searching ? "listbox" : undefined} 
-           onKeyDown={this.onEditorKeyDown_} 
-           onFocus={() => this.setState({activeItemId: null})}>
-        Type "@" to insert
-      </div>
-      {searching && <ul ref={this.listboxRef_} id="listbox" role="listbox" onKeyDown={this.onListboxKeyDown_}>
-        {OPTIONS.map((option, index) => {
-          const optionId = `result-${index}`;
-          return <li ref={e => this.optionRefs_[index] = e} 
-                   id={optionId} className={index === activeOptionIndex ? "selected" : ""} key={optionId} tabIndex={-1} 
-                   role="option">{option}</li>;
-        })}
-      </ul>}
-      <div id="announcement" aria-live="assertive">{announcement}</div>
-      </div>);
-  }
-  
-  onEditorKeyDown_ = event => {
-  	const {searching, activeOptionIndex} = this.state;
-    switch (event.keyCode) {
-    	case 38:
-      case 40:
-      	if (searching) {
-      		event.preventDefault();
-          const indexDiff = event.keyCode === 40 ? 1 : -1
-          this.setState({activeOptionIndex: (activeOptionIndex + indexDiff + OPTIONS.length) % OPTIONS.length});
-				}
-				break;
-      case 50:
-    		this.setState({searching: true, announcement: "showing search results"});
-        break;
-      default:
-       	this.hideSearchResults_();
-        break;
-  	}
-  }
-  
-  hideSearchResults_ = () => {
-  	this.setState({searching: false, announcement: "search results hidden", activeOptionIndex: -1});
-  }
-}
+  constructor() {
+    super();_defineProperty(this, "onEditorKeyDown_",
 
-ReactDOM.render(
-  <Autocomplete />,
-  document.getElementById('container')
-);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    event => {
+      const { searching, activeOptionIndex } = this.state;
+      switch (event.keyCode) {
+        case 38:
+        case 40:
+          if (searching) {
+            event.preventDefault();
+            const indexDiff = event.keyCode === 40 ? 1 : -1;
+            this.setState({ activeOptionIndex: (activeOptionIndex + indexDiff + OPTIONS.length) % OPTIONS.length });
+          }
+          break;
+        case 50:
+          this.setState({ searching: true, announcement: "showing search results" });
+          break;
+        default:
+          this.hideSearchResults_();
+          break;}
+
+    });_defineProperty(this, "hideSearchResults_",
+
+    () => {
+      this.setState({ searching: false, announcement: "search results hidden", activeOptionIndex: -1 });
+    });this.editorRef_ = null;this.optionRefs_ = OPTIONS.map(option => null);this.state = { editorRange: null, searching: false, activeOptionIndex: -1, announcement: null };}render() {const { searching, activeOptionIndex, announcement } = this.state;return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", { ref: e => this.editorRef_ = e, id: "editor", contentEditable: "true", role: "textbox", "aria-multiline": "true", "aria-activedescendant": searching && `result-${activeOptionIndex}`, "aria-controls": searching ? "listbox" : undefined, "aria-expanded": searching || undefined, "aria-haspopup": searching ? "listbox" : undefined, onKeyDown: this.onEditorKeyDown_, onFocus: () => this.setState({ activeItemId: null }) }, "Type \"@\" to insert"), searching && /*#__PURE__*/React.createElement("ul", { ref: this.listboxRef_, id: "listbox", role: "listbox", onKeyDown: this.onListboxKeyDown_ }, OPTIONS.map((option, index) => {const optionId = `result-${index}`;return /*#__PURE__*/React.createElement("li", { ref: e => this.optionRefs_[index] = e, id: optionId, className: index === activeOptionIndex ? "selected" : "", key: optionId, tabIndex: -1, role: "option" }, option);})), /*#__PURE__*/React.createElement("div", { id: "announcement", "aria-live": "assertive" }, announcement));}}
+
+
+ReactDOM.render( /*#__PURE__*/
+React.createElement(Autocomplete, null),
+document.getElementById('container'));
 
     //# sourceURL=pen.js
   </script>
