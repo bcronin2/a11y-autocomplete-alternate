@@ -74,17 +74,23 @@ class Autocomplete extends React.Component {
 
     event => {
       const { searching, activeOptionIndex } = this.state;
-      switch (event.keyCode) {
-        case 38:
-        case 40:
+      switch (event.key) {
+        case "ArrowUp":
+        case "ArrowDown":
           if (searching) {
             event.preventDefault();
-            const indexDiff = event.keyCode === 40 ? 1 : -1;
-            this.setState({ activeOptionIndex: (activeOptionIndex + indexDiff + OPTIONS.length) % OPTIONS.length });
+            const indexDiff = event.key === "ArrowDown" ? 1 : -1;
+            let newIndex = activeOptionIndex + indexDiff;
+            if (newIndex < -1) {
+              newIndex = OPTIONS.length - 1;
+            } else if (newIndex >= OPTIONS.length) {
+              newIndex = -1;
+            }
+            this.setState({ activeOptionIndex: newIndex });
           }
           break;
-        case 50:
-          this.setState({ searching: true, announcement: "showing search results" });
+        case "@":
+          this.setState({ searching: true, announcement: "showing search suggestions" });
           break;
         default:
           this.hideSearchResults_();
@@ -93,8 +99,8 @@ class Autocomplete extends React.Component {
     });_defineProperty(this, "hideSearchResults_",
 
     () => {
-      this.setState({ searching: false, announcement: "search results hidden", activeOptionIndex: -1 });
-    });this.editorRef_ = null;this.optionRefs_ = OPTIONS.map(option => null);this.state = { editorRange: null, searching: false, activeOptionIndex: -1, announcement: null };}render() {const { searching, activeOptionIndex, announcement } = this.state;return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", { ref: e => this.editorRef_ = e, id: "editor", contentEditable: "true", role: "textbox", "aria-multiline": "true", "aria-activedescendant": searching && `result-${activeOptionIndex}`, "aria-controls": searching ? "listbox" : undefined, "aria-expanded": searching || undefined, "aria-haspopup": searching ? "listbox" : undefined, onKeyDown: this.onEditorKeyDown_, onFocus: () => this.setState({ activeItemId: null }) }, "Type \"@\" to insert"), searching && /*#__PURE__*/React.createElement("ul", { ref: this.listboxRef_, id: "listbox", role: "listbox", onKeyDown: this.onListboxKeyDown_ }, OPTIONS.map((option, index) => {const optionId = `result-${index}`;return /*#__PURE__*/React.createElement("li", { ref: e => this.optionRefs_[index] = e, id: optionId, className: index === activeOptionIndex ? "selected" : "", key: optionId, tabIndex: -1, role: "option" }, option);})), /*#__PURE__*/React.createElement("div", { id: "announcement", "aria-live": "assertive" }, announcement));}}
+      this.setState({ searching: false, announcement: "search suggestions hidden", activeOptionIndex: -1 });
+    });this.editorRef_ = null;this.optionRefs_ = OPTIONS.map(option => null);this.state = { editorRange: null, searching: false, activeOptionIndex: -1, announcement: null };}render() {const { searching, activeOptionIndex, announcement } = this.state;return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", { ref: e => this.editorRef_ = e, id: "editor", contentEditable: "true", role: "textbox", "aria-multiline": "true", "aria-activedescendant": searching && activeOptionIndex >= 0 && `result-${activeOptionIndex}`, "aria-controls": searching ? "listbox" : undefined, "aria-expanded": searching || undefined, "aria-haspopup": searching ? "listbox" : undefined, onKeyDown: this.onEditorKeyDown_, onFocus: () => this.setState({ activeItemId: null }) }, "Type \"@\" to insert"), searching && /*#__PURE__*/React.createElement("ul", { ref: this.listboxRef_, id: "listbox", role: "listbox", onKeyDown: this.onListboxKeyDown_ }, OPTIONS.map((option, index) => {const optionId = `result-${index}`;return /*#__PURE__*/React.createElement("li", { ref: e => this.optionRefs_[index] = e, id: optionId, className: index === activeOptionIndex ? "selected" : "", key: optionId, tabIndex: -1, role: "option" }, option);})), /*#__PURE__*/React.createElement("div", { id: "announcement", "aria-live": "assertive" }, announcement));}}
 
 
 ReactDOM.render( /*#__PURE__*/
