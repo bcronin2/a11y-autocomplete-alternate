@@ -47,14 +47,6 @@ class Autocomplete extends React.Component {
 
   render() {
   	const {searching, activeOptionIndex, announcement} = this.state;
-    const listbox = (<ul ref={this.listboxRef_} id="listbox" role="listbox" onKeyDown={this.onListboxKeyDown_}>
-        {OPTIONS.map((option, index) => {
-          const optionId = `result-${index}`;
-          return <li ref={e => this.optionRefs_[index] = e} 
-                   id={optionId} className={index === activeOptionIndex ? "selected" : ""} key={optionId} tabIndex={-1} 
-                   role="option">{option}</li>;
-        })}
-      </ul>);
     return (<div>
       <div ref={e => this.editorRef_ = e} 
            id="editor"
@@ -68,7 +60,14 @@ class Autocomplete extends React.Component {
            onFocus={() => this.setState({activeItemId: null})}>
         Type "@" to insert
       </div>
-      {searching && listbox}
+      {searching && <ul ref={this.listboxRef_} id="listbox" role="listbox" onKeyDown={this.onListboxKeyDown_}>
+        {OPTIONS.map((option, index) => {
+          const optionId = `result-${index}`;
+          return <li ref={e => this.optionRefs_[index] = e} 
+                   id={optionId} className={index === activeOptionIndex ? "selected" : ""} key={optionId} tabIndex={-1} 
+                   role="option">{option}</li>;
+        })}
+      </ul>}
       <div id="announcement" aria-live="assertive">{announcement}</div>
       </div>);
   }
